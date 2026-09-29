@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenya Education Administration & Management</title>
+    <meta name="description" content="6-slide presentation on Kenya's education stakeholders with 2026 CBC updates.">
+
+    <!-- PDF Export Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            background: #eef2f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem 4rem 1rem;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        .presentation { max-width: 1100px; width: 100%; }
+
+        /* ========== CONTROL BAR ========== */
+        .control-bar {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 100;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .control-btn {
+            background: #1a3b5d;
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.3rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 20, 40, 0.2);
+            transition: all 0.2s;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .control-btn:hover {
+            background: #0b2a4a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 20, 40, 0.3);
+        }
+
+        .control-btn.secondary {
+            background: #ffffff;
+            color: #1a3b5d;
+            border: 2px solid #1a3b5d;
+        }
+
+        .control-btn.secondary:hover { background: #eef4fa; }
+
+        /* ========== SLIDE BASE ========== */
+        .slide {
+            position: relative;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 12px 30px rgba(0, 20, 40, 0.12);
+            padding: 2.5rem 2.8rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid rgba(0, 60, 120, 0.08);
+            overflow: hidden;
+            page-break-inside: avoid;
+        }
+
+        /* ========== BACKGROUND LOGO WATERMARK (SVG-based) ========== */
+        .slide-bg-logo {
+            position: absolute;
+            right: -40px;
+            bottom: -40px;
+            width: 380px;
+            height: 380px;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide-bg-logo svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* For real image logos — uncomment and replace SVG with <img> */
+        .slide-bg-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0.85;
+        }
+
+        .slide-content { position: relative; z-index: 2; }
+
+        .slide-number {
+            position: absolute;
+            top: 1.2rem;
+            right: 2rem;
+            background: #1a3b5d;
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+            opacity: 0.9;
+            z-index: 5;
+        }
+
+        /* ========== HEADINGS ========== */
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #0b2a4a;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            color: #0b2a4a;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.2rem;
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a3b5d;
+            margin: 1.2rem 0 0.8rem 0;
+        }
+
+        h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #2a6eb0;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .legal-tag {
+            font-size: 0.95rem;
+            color: #4a5f73;
+            background: #eef4fa;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            display: inline-block;
+            margin-bottom: 1.8rem;
+            font-weight: 500;
+        }
+
+        /* ========== LISTS ========== */
+        ul { list-style: none; padding-left: 0; margin: 0.8rem 0; }
+
+        li {
+            position: relative;
+            padding-left: 1.8rem;
+            margin-bottom: 0.6rem;
+            font-size: 1.05rem;
+            color: #1e2f3f;
+        }
+
+        li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: #2a6eb0;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* ========== TABLES ========== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            font-size: 0.98rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            background: rgba(255,255,255,0.92);
+        }
+
+        th {
+            background: #e4eef9;
+            color: #0b2a4a;
+            font-weight: 600;
+            padding: 0.9rem 1rem;
+            text-align: left;
+            border-bottom: 2px solid #b8d0e8;
+        }
+
+        td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid #dfe9f2;
+            vertical-align: top;
+            background: rgba(250, 253, 255, 0.9);
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        /* ========== KEY MESSAGE ========== */
+        .key-message {
+            background: rgba(228, 240, 254, 0.92);
+            padding: 1rem 1.6rem;
+            border-radius: 14px;
+            margin: 1.6rem 0 1rem 0;
+            font-weight: 500;
+            color: #0c2f52;
+            font-size: 1.08rem;
+            font-style: italic;
+        }
+
+        .key-message::before {
+            content: "💬 ";
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        /* ========== UPDATE CALLOUT ========== */
+        .update-callout {
+            background: linear-gradient(135deg, #fffbf0 0%, #fef3d6 100%);
+            border: 2px solid #f0c896;
+            border-radius: 16px;
+            padding: 1.2rem 1.6rem;
+            margin: 1.4rem 0;
+            position: relative;
+        }
+
+        .update-callout::before {
+            content: "🔄 2026 UPDATE";
+            position: absolute;
+            top: -0.75rem;
+            left: 1.2rem;
+            background: #c46a1a;
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .update-callout h4 { color: #8a4a0a; margin-top: 0.3rem; font-size: 1rem; }
+        .update-callout ul li { font-size: 0.98rem; margin-bottom: 0.5rem; }
+        .update-callout ul li::before { color: #c46a1a; }
+
+        /* ========== DIAGRAM ========== */
+        .diagram {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem 0.5rem;
+            margin: 1.5rem 0;
+            padding: 1.2rem;
+            background: rgba(247, 250, 255, 0.9);
+            border-radius: 24px;
+            border: 1px solid #d1e2f5;
+        }
+
+        .diagram-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem 2rem;
+            width: 100%;
+            margin: 0.3rem 0;
+        }
+
+        .diagram-box {
+            background: #ffffff;
+            border: 2px solid #b8d0e8;
+            border-radius: 16px;
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            color: #0b2a4a;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .diagram-box.tsc { border-color: #2a6eb0; background: #e4f0fe; }
+        .diagram-box.unions { border-color: #2a9d8f; background: #e1f5f1; }
+        .diagram-box.schools { border-color: #e9b741; background: #fef8e7; }
+        .diagram-box.parents { border-color: #9b6bb0; background: #f3eafb; }
+        .diagram-box.students { border-color: #d95f4b; background: #fdeae7; }
+
+        .diagram-arrow { font-size: 1.5rem; color: #7a9ec0; font-weight: 300; }
+        .diagram-label { font-size: 0.78rem; font-weight: 400; color: #4e6d8c; margin-top: 0.2rem; }
+
+        /* ========== TWO COLUMN ========== */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+
+        /* ========== SLIDE THEMES ========== */
+        .slide-1 { background: linear-gradient(135deg, #f8fafd 0%, #e8f0fa 100%); }
+        .slide-1 h2 { border-left-color: #0b2a4a; }
+
+        .slide-tsc { background: linear-gradient(135deg, #eaf3fe 0%, #d4e6fa 100%); border: 1px solid #b8d0e8; }
+        .slide-tsc h2 { border-left: 6px solid #1a4b8c; color: #0a2e5c; }
+        .slide-tsc .slide-bg-logo { color: #1a4b8c; }
+        .slide-tsc th { background: #c9ddf5; color: #0a2e5c; }
+        .slide-tsc .key-message { background: rgba(201, 221, 245, 0.7); }
+
+        .slide-knut { background: linear-gradient(135deg, #e8f7ee 0%, #ceebd9 100%); border: 1px solid #a8d4b8; }
+        .slide-knut h2 { border-left: 6px solid #1e7a3a; color: #0d3d1e; }
+        .slide-knut .slide-bg-logo { color: #1e7a3a; }
+        .slide-knut th { background: #c3e6d0; color: #0d3d1e; }
+        .slide-knut .key-message { background: rgba(195, 230, 208, 0.7); }
+        .slide-knut li::before { color: #1e7a3a; }
+
+        .slide-kuppet { background: linear-gradient(135deg, #fff4e5 0%, #fde4c2 100%); border: 1px solid #f0c896; }
+        .slide-kuppet h2 { border-left: 6px solid #c46a1a; color: #6b3406; }
+        .slide-kuppet .slide-bg-logo { color: #c46a1a; }
+        .slide-kuppet th { background: #f7dbb0; color: #6b3406; }
+        .slide-kuppet .key-message { background: rgba(247, 219, 176, 0.7); }
+        .slide-kuppet li::before { color: #c46a1a; }
+
+        .slide-community { background: linear-gradient(135deg, #f5edfa 0%, #fde8e4 100%); border: 1px solid #d8c0e8; }
+        .slide-community h2 { border-left: 6px solid #7a4a9a; color: #3d1e5c; }
+        .slide-community .slide-bg-logo { color: #7a4a9a; }
+        .slide-community th { background: #e8d5f2; color: #3d1e5c; }
+        .slide-community .key-message { background: rgba(232, 213, 242, 0.7); }
+
+        .slide-summary { background: linear-gradient(135deg, #fefcf3 0%, #fdf3d6 100%); border: 1px solid #ecd9a8; }
+        .slide-summary h2 { border-left: 6px solid #b8860b; color: #5c4306; }
+        .slide-summary .slide-bg-logo { color: #b8860b; }
+        .slide-summary th { background: #f5e6b8; color: #5c4306; }
+        .slide-summary .key-message { background: rgba(245, 230, 184, 0.7); }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 800px) {
+            .slide { padding: 1.8rem 1.4rem; }
+            h1 { font-size: 1.9rem; }
+            h2 { font-size: 1.6rem; }
+            .two-col { grid-template-columns: 1fr; gap: 1rem; }
+            .diagram-row { flex-direction: column; gap: 0.6rem; }
+            .diagram-arrow { transform: rotate(90deg); }
+            .slide-bg-logo { width: 220px; height: 220px; }
+            .control-bar { top: 0.5rem; right: 0.5rem; }
+            .control-btn { padding: 0.5rem 0.9rem; font-size: 0.75rem; }
+        }
+
+        /* ========== PDF EXPORT MODE ========== */
+        .pdf-mode .slide {
+            box-shadow: none;
+            border: 1px solid #ddd;
+            margin-bottom: 1rem;
+            page-break-after: always;
+            break-inside: avoid;
+        }
+        .pdf-mode .slide-bg-logo { opacity: 0.08 !important; }
+        .pdf-mode .control-bar { display: none; }
+
+        /* ========== PRINT ========== */
+        @media print {
+            body { background: white; padding: 0.5in; }
+            .control-bar { display: none; }
+            .slide {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                margin-bottom: 1rem;
+                page-break-after: always;
+                break-inside: avoid;
+            }
+            .slide-bg-logo { opacity: 0.08 !important; }
+            .key-message, th, .diagram-box, .update-callout {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        .file-footer {
+            text-align: center;
+            color: #6b85a0;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-top: 1px solid #cdddee;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== CONTROL BAR ========== -->
+    <div class="control-bar">
+        <button class="control-btn" onclick="downloadPDF()">📄 Download PDF</button>
+        <button class="control-btn" onclick="downloadWord()">📝 Download Word</button>
+        <button class="control-btn secondary" onclick="window.print()">🖨️ Print</button>
+    </div>
+
+    <div class="presentation" id="presentation">
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 1: INTRODUCTION                                        -->
+        <!-- ============================================================ -->
+        <section class="slide slide-1">
+            <div class="slide-number">Slide 1 / 6</div>
+
+            <!-- BACKGROUND LOGO: Kenya flag (SVG) -->
+            <div class="slide-bg-logo">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="200" height="200" fill="#0b2a4a"/>
+                    <text x="100" y="115" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="#ffffff" text-anchor="middle">KE</text>
+                    <text x="100" y="155" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" letter-spacing="2">KENYA</text>
+                </svg>
+            </div>
+
+            <div class="slide-content">
+                <h1>Kenya's Education Administration & Management</h1>
+                <div class="legal-tag">⚖️ Constitution of 2010 · Basic Education Act · CBC Transition (2026)</div>
+                <h2>Introduction & Legal Framework</h2>
+
+                <ul>
+                    <li><strong>Constitution of 2010</strong> — supreme law, establishes fundamental rights & devolution</li>
+                    <li><strong>Basic Education Act</strong> — legal framework for basic education management</li>
+                    <li><strong>Collaborative framework</strong> — each stakeholder has a specific legal, administrative, or operational role</li>
+                    <li>Stakeholders include: <strong>TSC, KNUT, KUPPET, Parents, Students</strong></li>
+                </ul>
+
+                <div class="update-callout">
+                    <h4>What's new in 2026</h4>
+                    <ul>
+                        <li><strong>Competency-Based Curriculum (CBC)</strong> — now in Senior Secondary phase (Grade 10) as of January 2026</li>
+                        <li><strong>KNUT–KUPPET split</strong> — unions publicly disagree on Junior School autonomy</li>
+                        <li><strong>Education budget 2026/27</strong> — <strong>KSh 784.5 billion</strong>, largest sector allocation</li>
+                        <li><strong>39% of Kenyans</strong> cite fees/uniforms as biggest Grade 10 transition barrier (Infotrak, Dec 2025–Jan 2026)</li>
+                    </ul>
+                </div>
+
+                <div class="key-message">
+                    "The legal framework remains, but the 2026 reality is defined by CBC implementation and union disagreement."
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 2: TSC                                                 -->
+        <!-- ============================================================ -->
+        <section class="slide slide-tsc">
+            <div class="slide-number">Slide 2 / 6</div>
+
+            <!-- BACKGROUND LOGO: TSC (SVG placeholder) -->
+            <div class="slide-bg-logo">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="#1a4b8c" stroke-width="6"/>
+                    <text x="100" y="95" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#1a4b8c" text-anchor="middle">TSC</text>
+                    <text x="100" y="125" font-family="Arial, sans-serif" font-size="10" fill="#1a4b8c" text-anchor="middle" letter-spacing="1">TEACHERS SERVICE</text>
+                    <text x="100" y="140" font-family="Arial, sans-serif" font-size="10" fill="#1a4b8c" text-anchor="middle" letter-spacing="1">COMMISSION</text>
+                </svg>
+            </div>
+
+            <div class="slide-content">
+                <h2>Teachers Service Commission (TSC)</h2>
+                <p style="font-size:1.05rem; color:#2a4b6e; margin-bottom:1rem;"><strong>Established under Article 237</strong> · Independent constitutional commission</p>
+
+                <table>
+                    <thead>
+                        <tr><th style="width:35%;">Function</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Human Resource Management</strong></td><td>Registers, recruits, deploys, transfers, promotes, and disciplines teachers in all public primary, junior secondary, and senior secondary schools.</td></tr>
+                        <tr><td><strong>Quality Assurance & Standards</strong></td><td>Monitors teacher performance and compliance with professional teaching standards across schools.</td></tr>
+                        <tr><td><strong>Capacity Building</strong></td><td>Coordinates Continuous Professional Development (CPD) programs to equip educators for curriculum reforms, such as the Competency-Based Curriculum (CBC).</td></tr>
+                        <tr><td><strong>Policy Advisory</strong></td><td>Advises the national government on teacher demand, supply, and overall budget implications.</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="update-callout">
+                    <h4>2026 Updates</h4>
+                    <ul>
+                        <li><strong>Recruitment shift:</strong> No new primary teacher recruitment — all 16,000 new hires target <strong>Junior and Senior Schools</strong></li>
+                        <li><strong>20,000 intern teachers</strong> to be converted to permanent and pensionable terms</li>
+                        <li><strong>KSh 422.95 billion</strong> proposed 2026/27 budget (up from KSh 387.2B)</li>
+                        <li><strong>KSh 2 billion</strong> for promotions across all levels</li>
+                        <li><strong>70,000 teachers annually</strong> to be trained on CBC</li>
+                        <li><strong>New JSS administrative structure</strong> proposed — Heads of Institutions and Deputies, facing union resistance</li>
+                    </ul>
+                </div>
+
+                <div class="key-message">
+                    "TSC's core mandate remains, but its recruitment and training focus has decisively shifted to Junior and Senior Secondary Schools."
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 3: KNUT                                                -->
+        <!-- ============================================================ -->
+        <section class="slide slide-knut">
+            <div class="slide-number">Slide 3 / 6</div>
+
+            <!-- BACKGROUND LOGO: KNUT (SVG placeholder) -->
+            <div class="slide-bg-logo">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="#1e7a3a" stroke-width="6"/>
+                    <text x="100" y="95" font-family="Arial, sans-serif" font-size="38" font-weight="bold" fill="#1e7a3a" text-anchor="middle">KNUT</text>
+                    <text x="100" y="125" font-family="Arial, sans-serif" font-size="9" fill="#1e7a3a" text-anchor="middle" letter-spacing="1">KENYA NATIONAL UNION</text>
+                    <text x="100" y="138" font-family="Arial, sans-serif" font-size="9" fill="#1e7a3a" text-anchor="middle" letter-spacing="1">OF TEACHERS</text>
+                </svg>
+            </div>
+
+            <div class="slide-content">
+                <h2>Kenya National Union of Teachers (KNUT)</h2>
+                <p style="font-size:1.05rem; color:#2a4b6e; margin-bottom:1rem;"><strong>Represents:</strong> Teachers in public primary schools and entry-level positions</p>
+
+                <table>
+                    <thead>
+                        <tr><th style="width:35%;">Role</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Collective Bargaining</strong></td><td>Negotiates Collective Bargaining Agreements (CBAs) with the TSC regarding salaries, medical cover, allowances, and retirement terms.</td></tr>
+                        <tr><td><strong>Welfare & Rights Advocacy</strong></td><td>Protects teachers against unfair disciplinary actions, arbitrary transfers, or poor working conditions.</td></tr>
+                        <tr><td><strong>Instructional Leadership</strong></td><td>Contributes to national educational dialogues and advocates for adequate resources so teachers can deliver quality education.</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="update-callout">
+                    <h4>2026 Updates</h4>
+                    <ul>
+                        <li><strong>Opposes JSS autonomy</strong> — supports <strong>comprehensive school model</strong> (JSS within primary schools)</li>
+                        <li>SG Collins Oyuu: <em>"Grades 7, 8, and 9 are successfully domiciled in primary schools. Do not bring in what was not part of the reforms."</em></li>
+                        <li>Warns that separating JSS would <strong>disrupt learning</strong> and <strong>waste limited budget</strong></li>
+                        <li><strong>Publicly clashes with KUPPET</strong> on this issue — National Assembly Education Committee has documented the disagreement</li>
+                        <li>Advocates for <strong>comprehensive school</strong> under one headteacher and one BOM</li>
+                    </ul>
+                </div>
+
+                <div class="key-message">
+                    "KNUT's position: Keep Junior Schools within primary schools — separation would harm learners and waste resources."
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 4: KUPPET                                              -->
+        <!-- ============================================================ -->
+        <section class="slide slide-kuppet">
+            <div class="slide-number">Slide 4 / 6</div>
+
+            <!-- BACKGROUND LOGO: KUPPET (SVG placeholder) -->
+            <div class="slide-bg-logo">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="#c46a1a" stroke-width="6"/>
+                    <text x="100" y="95" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#c46a1a" text-anchor="middle">KUPPET</text>
+                    <text x="100" y="125" font-family="Arial, sans-serif" font-size="8" fill="#c46a1a" text-anchor="middle" letter-spacing="1">KENYA UNION OF POST</text>
+                    <text x="100" y="138" font-family="Arial, sans-serif" font-size="8" fill="#c46a1a" text-anchor="middle" letter-spacing="1">PRIMARY EDUCATION TEACHERS</text>
+                </svg>
+            </div>
+
+            <div class="slide-content">
+                <h2>Kenya Union of Post Primary Education Teachers (KUPPET)</h2>
+                <p style="font-size:1.05rem; color:#2a4b6e; margin-bottom:1rem;"><strong>Represents:</strong> Secondary schools, Junior Secondary Schools (JSS), TVETs, and tertiary colleges</p>
+
+                <table>
+                    <thead>
+                        <tr><th style="width:35%;">Role</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Targeted Representation</strong></td><td>Negotiates specialised terms of service unique to post-primary institutions, such as laboratory allowances and risk management frameworks.</td></tr>
+                        <tr><td><strong>Professional Development Advocacy</strong></td><td>Pushes the government and TSC to offer sponsorship, fair promotions, and adequate training for post-primary tutors during systemic shifts like the CBC rollout.</td></tr>
+                        <tr><td><strong>Legal Support</strong></td><td>Offers legal defense and representations for member teachers facing employment or administrative disputes.</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="update-callout">
+                    <h4>2026 Updates</h4>
+                    <ul>
+                        <li><strong>Demands JSS autonomy</strong> — wants separate principals, deputy principals, BOM, and funding for Junior Schools</li>
+                        <li>SG Akello Misori calls domiciling JSS in primary schools <strong>"a mistake"</strong></li>
+                        <li>Argues: <em>"A supervisor must qualify to do whatever they manage"</em> — P1 or ECDE holders should not supervise degree-level JSS teachers</li>
+                        <li>Wants JSS relocated to <strong>secondary schools</strong> where labs and facilities already exist</li>
+                        <li>At Basic Education Bill 2026 hearings: <em>"Anywhere they have talked about comprehensive school should entirely be deleted"</em></li>
+                        <li><strong>Publicly clashes with KNUT</strong> — documented by National Assembly Education Committee</li>
+                    </ul>
+                </div>
+
+                <div class="key-message">
+                    "KUPPET's position: Junior Schools must be autonomous — the current arrangement undermines qualifications and resource access."
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 5: PARENTS & STUDENTS                                  -->
+        <!-- ============================================================ -->
+        <section class="slide slide-community">
+            <div class="slide-number">Slide 5 / 6</div>
+
+            <!-- BACKGROUND LOGO: Community (SVG) -->
+            <div class="slide-bg-logo">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="#7a4a9a" stroke-width="6"/>
+                    <text x="100" y="95" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="#7a4a9a" text-anchor="middle">PTA · BOM</text>
+                    <text x="100" y="125" font-family="Arial, sans-serif" font-size="11" fill="#7a4a9a" text-anchor="middle" letter-spacing="1">PARENTS &amp; STUDENTS</text>
+                </svg>
+            </div>
+
+            <div class="slide-content">
+                <h2>Parents & Students</h2>
+
+                <div class="two-col">
+                    <!-- Parents -->
+                    <div>
+                        <h3 style="border-bottom: 3px solid #9b6bb0; padding-bottom:0.3rem; color:#5e3a73;">👪 Parents</h3>
+                        <p style="font-weight:500; color:#4a2e5e; margin-bottom:0.6rem;">Engage through <strong>PTA</strong> and <strong>BOM</strong></p>
+                        <ul>
+                            <li><strong>Financial & Resource Support:</strong> Co-fund infrastructure, buy uniforms, supply learning materials, pay approved levies.</li>
+                            <li><strong>Governance & Co-Management:</strong> Elect BOM representatives, participate in strategic planning, budgeting, and oversight.</li>
+                            <li><strong>Learning Facilitation:</strong> Monitor homework, foster discipline, reinforce values at home.</li>
+                        </ul>
+
+                        <div class="update-callout" style="margin-top:1rem;">
+                            <h4>2026 Updates</h4>
+                            <ul>
+                                <li><strong>Five legally mandated BOM committees</strong> (Basic Education Act, Sec. 61):
+                                    <ul style="margin-top:0.3rem;">
+                                        <li>Finance, Procurement & General Purposes</li>
+                                        <li>Academic Standards, Quality & Environment</li>
+                                        <li>Discipline, Ethics & Integrity</li>
+                                        <li>Audit</li>
+                                        <li>Human Rights & Student Welfare</li>
+                                    </ul>
+                                </li>
+                                <li><strong>39% of Kenyans</strong> cite high fees and uniform costs as biggest Grade 10 transition barrier (Infotrak, n=1,000)</li>
+                                <li><strong>19%</strong> say they lacked adequate information about CBC</li>
+                                <li><strong>45% of parents</strong> dissatisfied with CBC grading — "don't see a difference" from 8-4-4</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Students -->
+                    <div>
+                        <h3 style="border-bottom: 3px solid #d95f4b; padding-bottom:0.3rem; color:#a13e2e;">🎓 Students</h3>
+                        <p style="font-weight:500; color:#7a2e22; margin-bottom:0.6rem;">Primary internal stakeholders</p>
+                        <ul>
+                            <li><strong>Active Learning Engagement:</strong> Accountable for academic performance, completing assignments, respecting school rules.</li>
+                            <li><strong>Participatory Leadership:</strong> Elect student council leaders (prefects) as a bridge between students and administration.</li>
+                            <li><strong>Feedback Mechanism:</strong> Provide vital data on teacher attendance, facility quality, safety, and learning environment.</li>
+                        </ul>
+
+                        <div class="update-callout" style="margin-top:1rem;">
+                            <h4>2026 Updates</h4>
+                            <ul>
+                                <li><strong>Continuous assessment replaces one-off exams:</strong> EE (Exceeding) / ME (Meeting) / AE (Approaching) / BE (Below Expectations)</li>
+                                <li><strong>45% of Kenyans dissatisfied</strong> with CBC grading — parents "don't see a difference" from 8-4-4</li>
+                                <li>PS Julius Bitok: parents are <em>"trying to interpret KJSEA using the old KCPE lens"</em></li>
+                                <li><strong>Pathway selection challenges:</strong> Students request changes shortly after placement — often due to peer influence or parental pressure, not genuine interest</li>
+                                <li><strong>Project-based learning:</strong> Students complete authentic projects addressing community problems</li>
+                                <li><strong>ICT competency required:</strong> Mobile devices used for research, content creation, interactive learning</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-message">
+                    "Parents and students are not passive recipients — they are active participants. But CBC has placed new financial and information burdens on families."
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 6: SUMMARY OF INTERDEPENDENCE                          -->
+        <!-- ============================================================ -->
+        <section class="slide slide-summary">
+            <div class="slide-number">Slide 6 / 6</div>
+
+            <!-- BACKGROUND LOGO: Summary (SVG) -->
+            <div class="slide-bg-logo">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="#b8860b" stroke-width="6"/>
+                    <text x="100" y="95" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#b8860b" text-anchor="middle">🤝</text>
+                    <text x="100" y="130" font-family="Arial, sans-serif" font-size="11" fill="#b8860b" text-anchor="middle" letter-spacing="1">INTERDEPENDENCE</text>
+                </svg>
+            </div>
+
+            <div class="slide-content">
+                <h2>Summary of Interdependence</h2>
+
+                <div class="diagram">
+                    <div class="diagram-row">
+                        <div class="diagram-box tsc">TSC<br><span class="diagram-label">Employer / Regulator</span></div>
+                        <span class="diagram-arrow">⇄</span>
+                        <div class="diagram-box unions">KNUT & KUPPET<br><span class="diagram-label">Unions (now divided)</span></div>
+                    </div>
+                    <div class="diagram-row"><span class="diagram-arrow">⬇</span></div>
+                    <div class="diagram-row">
+                        <div class="diagram-box schools">🏫 Schools<br><span class="diagram-label">Administration & Management</span></div>
+                    </div>
+                    <div class="diagram-row"><span class="diagram-arrow">⬇</span></div>
+                    <div class="diagram-row">
+                        <div class="diagram-box parents">👪 Parents<br><span class="diagram-label">PTA & BOM (5 committees)</span></div>
+                        <span class="diagram-arrow">⇄</span>
+                        <div class="diagram-box students">🎓 Students<br><span class="diagram-label">Learners & Leaders</span></div>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr><th>Stakeholder</th><th>Core Contribution</th><th>2026 Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>TSC</strong></td><td>Employment, standards, policy advisory</td><td>Recruitment shifted to Junior/Senior Schools</td></tr>
+                        <tr><td><strong>KNUT</strong></td><td>Primary teacher welfare & collective bargaining</td><td>Opposes JSS autonomy; clashes with KUPPET</td></tr>
+                        <tr><td><strong>KUPPET</strong></td><td>Post-primary teacher welfare & legal support</td><td>Demands JSS autonomy; clashes with KNUT</td></tr>
+                        <tr><td><strong>Parents</strong></td><td>Resources, governance, home learning support</td><td>5 BOM committees; 39% cite fees as biggest barrier</td></tr>
+                        <tr><td><strong>Students</strong></td><td>Engagement, leadership, feedback</td><td>EE/ME/AE/BE assessment; 45% public dissatisfaction</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="key-message">
+                    "No single stakeholder can run education alone. But in 2026, the system's interdependence is strained by CBC transition and union disagreement."
+                </div>
+            </div>
+        </section>
+
+        <div class="file-footer">
+            Kenya Education Administration & Management · 6 Slides · 2026 Updates Included
+        </div>
+
+    </div>
+
+    <!-- ========== EXPORT SCRIPTS ========== -->
+    <script>
+        // PDF Export — preserves backgrounds, logos, colors
+        function downloadPDF() {
+            const element = document.getElementById('presentation');
+            const opt = {
+                margin:       [0.3, 0.3, 0.3, 0.3],
+                filename:     'Kenya-Education-Administration-2026.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: '#eef2f6',
+                    logging: false
+                },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
+                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        // Word Export — opens a .doc file with embedded layout
+        function downloadWord() {
+            const content = document.getElementById('presentation').innerHTML;
+
+            const wordHTML = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office'
+                      xmlns:w='urn:schemas-microsoft-com:office:word'
+                      xmlns='http://www.w3.org/TR/REC-html40'>
+                <head>
+                    <meta charset='utf-8'>
+                    <title>Kenya Education Administration & Management</title>
+                    <!--[if gte mso 9]>
+                    <xml>
+                        <w:WordDocument>
+                            <w:View>Print</w:View>
+                            <w:Zoom>100</w:Zoom>
+                        </w:WordDocument>
+                    </xml>
+                    <![endif]-->
+                    <style>
+                        @page { size: A4; margin: 0.5in; }
+                        body { font-family: 'Segoe UI', Arial, sans-serif; }
+                        .slide {
+                            page-break-after: always;
+                            padding: 1.5rem;
+                            margin-bottom: 1rem;
+                            border: 1px solid #ccc;
+                            position: relative;
+                        }
+                        .slide-bg-logo {
+                            position: absolute;
+                            right: 20px;
+                            bottom: 20px;
+                            width: 280px;
+                            height: 280px;
+                            opacity: 0.08;
+                        }
+                        .slide-bg-logo svg { width: 100%; height: 100%; }
+                        .slide-number {
+                            background: #1a3b5d;
+                            color: #fff;
+                            padding: 0.25rem 0.9rem;
+                            border-radius: 30px;
+                            font-size: 0.8rem;
+                            display: inline-block;
+                            float: right;
+                        }
+                        h1 { color: #0b2a4a; font-size: 22pt; }
+                        h2 { color: #0b2a4a; font-size: 18pt; border-left: 4px solid #1a4b8c; padding-left: 0.6rem; }
+                        h3 { color: #1a3b5d; font-size: 14pt; }
+                        h4 { color: #2a6eb0; font-size: 12pt; }
+                        table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; }
+                        th { background: #e4eef9; padding: 0.5rem; text-align: left; border: 1px solid #b8d0e8; }
+                        td { padding: 0.5rem; border: 1px solid #dfe9f2; }
+                        ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+                        li { margin-bottom: 0.3rem; font-size: 11pt; }
+                        .key-message {
+                            background: #e4f0fe;
+                            padding: 0.8rem 1.2rem;
+                            border-radius: 10px;
+                            font-style: italic;
+                            margin: 1rem 0;
+                        }
+                        .update-callout {
+                            background: #fffbf0;
+                            border: 1px solid #f0c896;
+                            padding: 0.8rem 1.2rem;
+                            border-radius: 10px;
+                            margin: 1rem 0;
+                        }
+                        .two-col { display: table; width: 100%; }
+                        .two-col > div { display: table-cell; width: 50%; padding: 0 0.5rem; vertical-align: top; }
+                        .diagram-box {
+                            border: 2px solid #b8d0e8;
+                            padding: 0.5rem 1rem;
+                            border-radius: 10px;
+                            display: inline-block;
+                            margin: 0.3rem;
+                            text-align: center;
+                            font-weight: bold;
+                        }
+                        .diagram-box.tsc { background: #e4f0fe; border-color: #2a6eb0; }
+                        .diagram-box.unions { background: #e1f5f1; border-color: #2a9d8f; }
+                        .diagram-box.schools { background: #fef8e7; border-color: #e9b741; }
+                        .diagram-box.parents { background: #f3eafb; border-color: #9b6bb0; }
+                        .diagram-box.students { background: #fdeae7; border-color: #d95f4b; }
+                    </style>
+                </head>
+                <body>${content}</body>
+                </html>
+            `;
+
+            const blob = new Blob(['\ufeff', wordHTML], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'Kenya-Education-Administration-2026.doc';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
