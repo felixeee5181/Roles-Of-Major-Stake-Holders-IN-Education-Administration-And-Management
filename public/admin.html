@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin · Create Presenters</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background: #eef2f6; padding: 2rem; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        h1 { color: #0b2a4a; }
+        .card { background: #fff; border-radius: 20px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06); }
+        h2 { color: #1a3b5d; margin-bottom: 1rem; font-size: 1.2rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; color: #1a3b5d; }
+        input, select {
+            width: 100%;
+            padding: 0.7rem;
+            border: 2px solid #d0dde8;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        button {
+            background: #1a3b5d; color: #fff; border: none;
+            padding: 0.8rem 1.5rem; border-radius: 10px;
+            font-size: 0.95rem; font-weight: 600;
+            cursor: pointer; font-family: inherit;
+        }
+        button:hover { background: #0b2a4a; }
+        button.danger { background: #c33; padding: 0.4rem 0.9rem; font-size: 0.85rem; }
+        button.danger:hover { background: #a11; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { padding: 0.7rem; text-align: left; border-bottom: 1px solid #e0e8f0; }
+        th { background: #f0f5fb; color: #1a3b5d; font-size: 0.85rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .status { padding: 0.8rem 1rem; border-radius: 10px; margin-bottom: 1rem; display: none; }
+        .status.show { display: block; }
+        .status.success { background: #d1fae5; color: #065f46; }
+        .status.error { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="topbar">
+            <h1>Admin Panel</h1>
+            <button class="danger" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="card">
+            <h2>Create Presenter</h2>
+            <div class="status" id="status"></div>
+            <form id="createForm">
+                <div class="form-row">
+                    <div>
+                        <label>Username</label>
+                        <input type="text" id="newUsername" required>
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <input type="text" id="newPassword" required>
+                    </div>
+                </div>
+                <label>Role (determines which slide they see)</label>
+                <select id="newRole" required>
+                    <option value="">— Select role —</option>
+                    <option value="presenter1">Presenter 1 — Introduction & Legal Framework</option>
+                    <option value="presenter2">Presenter 2 — TSC</option>
+                    <option value="presenter3">Presenter 3 — KNUT</option>
+                    <option value="presenter4">Presenter 4 — KUPPET</option>
+                    <option value="presenter5">Presenter 5 — Parents & Students</option>
+                    <option value="presenter6">Presenter 6 — Summary of Interdependence</option>
+                </select>
+                <button type="submit">Create User</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Existing Users</h2>
+            <table>
+                <thead>
+                    <tr><th>ID</th><th>Username</th><th>Role</th><th>Created</th><th></th></tr>
+                </thead>
+                <tbody id="userList"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        if (!token) window.location.href = '/login.html';
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        if (user.role !== 'admin') {
+            alert('Admin access required');
+            window.location.href = '/';
+        }
+        const statusBox = document.getElementById('status');
+        function showStatus(msg, type) {
+            statusBox.textContent = msg;
+            statusBox.className = `status show ${type}`;
+            setTimeout(() => statusBox.classList.remove('show'), 4000);
+        }
+        async function loadUsers() {
+            const res = await fetch('/api/admin/users', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await res.json();
+            const tbody = document.getElementById('userList');
+            tbody.innerHTML = '';
+            data.users.forEach(u => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${u.id}</td>
+                    <td>${u.username}</td>
+                    <td>${u.role}</td>
+                    <td>${new Date(u.created_at).toLocaleDateString()}</td>
+                    <td>${u.role !== 'admin' ? `<button class="danger" onclick="deleteUser(${u.id})">Delete</button>` : ''}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+        document.getElementById('createForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const body = {
+                username: document.getElementById('newUsername').value,
+                password: document.getElementById('newPassword').value,
+                role: document.getElementById('newRole').value
+            };
+            const res = await fetch('/api/admin/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(body)
+            });
+            const data = await res.json();
+            if (res.ok) {
+                showStatus(`User "${data.user.username}" created with role ${data.user.role}`, 'success');
+                document.getElementById('createForm').reset();
+                loadUsers();
+            } else {
+                showStatus(data.error || 'Failed to create user', 'error');
+            }
+        });
+        async function deleteUser(id) {
+            if (!confirm('Delete this user?')) return;
+            await fetch(`/api/admin/users/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            loadUsers();
+        }
+        function logout() {
+            localStorage.clear();
+            window.location.href = '/login.html';
+        }
+        loadUsers();
+    </script>
+</body>
+</html>
