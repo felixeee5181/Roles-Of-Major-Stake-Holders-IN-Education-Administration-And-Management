@@ -79,15 +79,8 @@
         }
 
         /* ============================================================
-           BACKGROUND LOGO — VISIBLE BUT TRANSPARENT
-           ============================================================
-           Changes made:
-           - Size: 380px → 520px (bigger, more visible)
-           - Opacity: 0.06 → 0.14 (clearly visible, still faint)
-           - Position: moved inward so it is not clipped
-           - Soft glow behind logo for readability
-           - Added blend mode for cleaner look on colored slides
-        */
+           BACKGROUND LOGO — REAL IMAGES, VISIBLE BUT TRANSPARENT
+           ============================================================ */
         .slide-bg-logo {
             position: absolute;
             right: 10px;
@@ -100,10 +93,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.3s;
         }
 
-        /* Soft glow behind the logo so it stands out from the slide background */
+        /* Soft glow behind the logo */
         .slide-bg-logo::before {
             content: "";
             position: absolute;
@@ -118,18 +110,13 @@
             z-index: -1;
         }
 
-        .slide-bg-logo svg,
+        /* Real image logos */
         .slide-bg-logo img {
             width: 100%;
             height: 100%;
             object-fit: contain;
             display: block;
             filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
-        }
-
-        /* If using a real image logo, this keeps transparency */
-        .slide-bg-logo img {
-            opacity: 0.9;
         }
 
         .slide-content {
@@ -160,8 +147,6 @@
             letter-spacing: -0.02em;
             line-height: 1.2;
             margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 3;
         }
 
         h2 {
@@ -171,8 +156,6 @@
             letter-spacing: -0.01em;
             margin-bottom: 1.2rem;
             padding-left: 1rem;
-            position: relative;
-            z-index: 3;
         }
 
         h3 {
@@ -180,8 +163,6 @@
             font-weight: 600;
             color: #1a3b5d;
             margin: 1.2rem 0 0.8rem 0;
-            position: relative;
-            z-index: 3;
         }
 
         h4 {
@@ -189,8 +170,6 @@
             font-weight: 600;
             color: #2a6eb0;
             margin: 1rem 0 0.5rem 0;
-            position: relative;
-            z-index: 3;
         }
 
         .legal-tag {
@@ -202,8 +181,6 @@
             display: inline-block;
             margin-bottom: 1.8rem;
             font-weight: 500;
-            position: relative;
-            z-index: 3;
         }
 
         /* ========== LISTS ========== */
@@ -215,7 +192,6 @@
             margin-bottom: 0.6rem;
             font-size: 1.05rem;
             color: #1e2f3f;
-            z-index: 3;
         }
 
         li::before {
@@ -237,8 +213,6 @@
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
             background: rgba(255, 255, 255, 0.95);
-            position: relative;
-            z-index: 3;
         }
 
         th {
@@ -269,8 +243,6 @@
             color: #0c2f52;
             font-size: 1.08rem;
             font-style: italic;
-            position: relative;
-            z-index: 3;
         }
 
         .key-message::before {
@@ -287,7 +259,6 @@
             padding: 1.2rem 1.6rem;
             margin: 1.4rem 0;
             position: relative;
-            z-index: 3;
         }
 
         .update-callout::before {
@@ -319,8 +290,6 @@
             background: rgba(247, 250, 255, 0.95);
             border-radius: 24px;
             border: 1px solid #d1e2f5;
-            position: relative;
-            z-index: 3;
         }
 
         .diagram-row {
@@ -360,8 +329,6 @@
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
             margin: 1rem 0;
-            position: relative;
-            z-index: 3;
         }
 
         /* ========== SLIDE THEMES ========== */
@@ -464,23 +431,13 @@
     <div class="presentation" id="presentation">
 
         <!-- ============================================================ -->
-        <!-- SLIDE 1: INTRODUCTION                                        -->
+        <!-- SLIDE 1: INTRODUCTION — Kenya Coat of Arms                   -->
         <!-- ============================================================ -->
         <section class="slide slide-1">
             <div class="slide-number">Slide 1 / 6</div>
 
-            <!-- BACKGROUND LOGO: Kenya -->
             <div class="slide-bg-logo">
-                <!--
-                    To use a real logo image instead of the SVG below,
-                    replace everything inside this div with:
-                    <img src="kenya-coat-of-arms.png" alt="Kenya Coat of Arms">
-                -->
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="200" height="200" rx="20" fill="#0b2a4a"/>
-                    <text x="100" y="115" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="#ffffff" text-anchor="middle">KE</text>
-                    <text x="100" y="155" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" letter-spacing="2">KENYA</text>
-                </svg>
+                <img src="kenya-coat-of-arms.png" alt="Kenya Coat of Arms">
             </div>
 
             <div class="slide-content">
@@ -512,20 +469,13 @@
         </section>
 
         <!-- ============================================================ -->
-        <!-- SLIDE 2: TSC                                                 -->
+        <!-- SLIDE 2: TSC — Real TSC Logo                                 -->
         <!-- ============================================================ -->
         <section class="slide slide-tsc">
             <div class="slide-number">Slide 2 / 6</div>
 
-            <!-- BACKGROUND LOGO: TSC -->
             <div class="slide-bg-logo">
-                <!-- Replace with: <img src="tsc-logo.png" alt="TSC Logo"> -->
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="100" r="90" fill="none" stroke="#1a4b8c" stroke-width="8"/>
-                    <text x="100" y="95" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#1a4b8c" text-anchor="middle">TSC</text>
-                    <text x="100" y="125" font-family="Arial, sans-serif" font-size="10" fill="#1a4b8c" text-anchor="middle" letter-spacing="1">TEACHERS SERVICE</text>
-                    <text x="100" y="140" font-family="Arial, sans-serif" font-size="10" fill="#1a4b8c" text-anchor="middle" letter-spacing="1">COMMISSION</text>
-                </svg>
+                <img src="tsc-logo.png" alt="Teachers Service Commission Logo">
             </div>
 
             <div class="slide-content">
@@ -563,20 +513,13 @@
         </section>
 
         <!-- ============================================================ -->
-        <!-- SLIDE 3: KNUT                                                -->
+        <!-- SLIDE 3: KNUT — Real KNUT Logo                               -->
         <!-- ============================================================ -->
         <section class="slide slide-knut">
             <div class="slide-number">Slide 3 / 6</div>
 
-            <!-- BACKGROUND LOGO: KNUT -->
             <div class="slide-bg-logo">
-                <!-- Replace with: <img src="knut-logo.png" alt="KNUT Logo"> -->
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="100" r="90" fill="none" stroke="#1e7a3a" stroke-width="8"/>
-                    <text x="100" y="95" font-family="Arial, sans-serif" font-size="38" font-weight="bold" fill="#1e7a3a" text-anchor="middle">KNUT</text>
-                    <text x="100" y="125" font-family="Arial, sans-serif" font-size="9" fill="#1e7a3a" text-anchor="middle" letter-spacing="1">KENYA NATIONAL UNION</text>
-                    <text x="100" y="138" font-family="Arial, sans-serif" font-size="9" fill="#1e7a3a" text-anchor="middle" letter-spacing="1">OF TEACHERS</text>
-                </svg>
+                <img src="knut-logo.png" alt="Kenya National Union of Teachers Logo">
             </div>
 
             <div class="slide-content">
@@ -612,20 +555,13 @@
         </section>
 
         <!-- ============================================================ -->
-        <!-- SLIDE 4: KUPPET                                              -->
+        <!-- SLIDE 4: KUPPET — Real KUPPET Logo                           -->
         <!-- ============================================================ -->
         <section class="slide slide-kuppet">
             <div class="slide-number">Slide 4 / 6</div>
 
-            <!-- BACKGROUND LOGO: KUPPET -->
             <div class="slide-bg-logo">
-                <!-- Replace with: <img src="kuppet-logo.png" alt="KUPPET Logo"> -->
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="100" r="90" fill="none" stroke="#c46a1a" stroke-width="8"/>
-                    <text x="100" y="95" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="#c46a1a" text-anchor="middle">KUPPET</text>
-                    <text x="100" y="125" font-family="Arial, sans-serif" font-size="8" fill="#c46a1a" text-anchor="middle" letter-spacing="1">KENYA UNION OF POST</text>
-                    <text x="100" y="138" font-family="Arial, sans-serif" font-size="8" fill="#c46a1a" text-anchor="middle" letter-spacing="1">PRIMARY EDUCATION TEACHERS</text>
-                </svg>
+                <img src="kuppet-logo.png" alt="Kenya Union of Post Primary Education Teachers Logo">
             </div>
 
             <div class="slide-content">
@@ -662,12 +598,11 @@
         </section>
 
         <!-- ============================================================ -->
-        <!-- SLIDE 5: PARENTS & STUDENTS                                  -->
+        <!-- SLIDE 5: PARENTS & STUDENTS — SVG placeholder (no official logo) -->
         <!-- ============================================================ -->
         <section class="slide slide-community">
             <div class="slide-number">Slide 5 / 6</div>
 
-            <!-- BACKGROUND LOGO: Community -->
             <div class="slide-bg-logo">
                 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="100" cy="100" r="90" fill="none" stroke="#7a4a9a" stroke-width="8"/>
@@ -680,7 +615,6 @@
                 <h2>Parents & Students</h2>
 
                 <div class="two-col">
-                    <!-- Parents -->
                     <div>
                         <h3 style="border-bottom: 3px solid #9b6bb0; padding-bottom:0.3rem; color:#5e3a73;">👪 Parents</h3>
                         <p style="font-weight:500; color:#4a2e5e; margin-bottom:0.6rem;">Engage through <strong>PTA</strong> and <strong>BOM</strong></p>
@@ -709,7 +643,6 @@
                         </div>
                     </div>
 
-                    <!-- Students -->
                     <div>
                         <h3 style="border-bottom: 3px solid #d95f4b; padding-bottom:0.3rem; color:#a13e2e;">🎓 Students</h3>
                         <p style="font-weight:500; color:#7a2e22; margin-bottom:0.6rem;">Primary internal stakeholders</p>
@@ -740,12 +673,11 @@
         </section>
 
         <!-- ============================================================ -->
-        <!-- SLIDE 6: SUMMARY OF INTERDEPENDENCE                          -->
+        <!-- SLIDE 6: SUMMARY — SVG placeholder                            -->
         <!-- ============================================================ -->
         <section class="slide slide-summary">
             <div class="slide-number">Slide 6 / 6</div>
 
-            <!-- BACKGROUND LOGO: Summary -->
             <div class="slide-bg-logo">
                 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="100" cy="100" r="90" fill="none" stroke="#b8860b" stroke-width="8"/>
@@ -802,7 +734,6 @@
 
     <!-- ========== EXPORT SCRIPTS ========== -->
     <script>
-        // PDF Export — preserves backgrounds, logos, colors
         function downloadPDF() {
             const element = document.getElementById('presentation');
             const opt = {
@@ -821,7 +752,6 @@
             html2pdf().set(opt).from(element).save();
         }
 
-        // Word Export — opens a .doc file with embedded layout
         function downloadWord() {
             const content = document.getElementById('presentation').innerHTML;
 
@@ -848,9 +778,9 @@
                             bottom: 20px;
                             width: 350px;
                             height: 350px;
-                            opacity: 0.14;
+                            opacity: 0.15;
                         }
-                        .slide-bg-logo svg { width: 100%; height: 100%; }
+                        .slide-bg-logo img { width: 100%; height: 100%; object-fit: contain; }
                         .slide-number {
                             background: #1a3b5d;
                             color: #fff;
